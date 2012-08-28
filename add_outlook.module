@@ -1,0 +1,117 @@
+<?php 
+
+
+drupal_add_css(drupal_get_path('module', 'add_outlook') . '/css/custom.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+/**
+ * Implements hook_menu().
+ */
+function add_outlook_menu() {
+  $items = array();
+
+  $items['add-outlook/%/addtocal.ics'] = array(
+    'title' => 'Add to outlook',
+    'description' => 'Add to outlook',
+    'page callback' => 'add_outlook_cal',
+    'page arguments' => array(1),
+  	'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function add_outlook_cal($nid){
+	
+	drupal_add_http_header('Content-Type', 'application/calendar; charset=utf-8');
+	$node = node_load($nid);
+	if(!$node ){
+		return;
+	}else {
+		if($node -> type != 'events'){
+			return;
+		}	
+	}
+	$info = add_outlook_extract_event_info($node);
+	//dsm($info);
+	$rfc_dates = add_outlook_rfc_3339_date($info['start'],$info['end']);
+	//dsm($node);
+	if(isset($node->field_info['und']['0']['value'])){
+		$decription =  drupal_html_to_text($node->field_info['und']['0']['value']);
+	}else {
+		$decription = 'we are updating data';
+	}
+	$decription = str_replace("\n", " \\n", $decription); 
+	dsm($decription);
+	
+	echo 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:' . $node->title  . '@' . $_SERVER['HTTP_HOST'] . '
+DTSTAMP:' . $rfc_dates['start'] . '
+DTSTART:' . $rfc_dates['start'] . '
+DTEND:' . $rfc_dates['end'] . '
+SUMMARY:' . $node->title . '
+DESCRIPTION: ' . $decription .'
+LOCATION:' . $node->field_location['und']['0']['value'] . '
+END:VEVENT
+END:VCALENDAR';
+	exit();/*
+	
+	$build = array();
+	$build['no_content'] = array(
+      '#prefix' => '<p>',
+      '#markup' => t('There is currently no content classified with this term.'),
+      '#suffix' => '</p>',
+    );
+	return $build;*/
+}
+
+
+function add_outlook_extract_event_info($node){
+	//if(!isset($node -> field_date['und'][0]['value'])){
+		$start_date = $node -> field_date['und'][0]['value'];
+	//}else {
+		//$start_date = 
+	//}
+	
+	
+	if (isset($node -> field_date['und'][0]['value2'])) {
+		$end_date = $node -> field_date['und'][0]['value2'];
+	} else {
+		$end_date = $start_date;
+	}
+	return array(
+			'start' => $start_date,
+			'end' => $end_date,
+			);
+}
+
+function add_outlook_rfc_3339_date($start, $end) {
+	if (!$end) {
+		$end = $start;
+	}
+
+	$start_timestamp = strtotime($start . 'UTC');
+	$end_timestamp = strtotime($end . 'UTC');
+
+	$diff_timestamp = $end_timestamp - $start_timestamp;
+
+	$start_date = gmdate('Ymd', $start_timestamp) . 'T' . gmdate('His', $start_timestamp) . 'Z';
+	$local_start_date = date('Ymd', $start_timestamp) . 'T' . date('His', $start_timestamp) . '';
+	$end_date = gmdate('Ymd', $end_timestamp) . 'T' . gmdate('His', $end_timestamp) . 'Z';
+	$local_end_date = date('Ymd', $end_timestamp) . 'T' . date('His', $end_timestamp) . '';
+
+	$diff_hours = str_pad(round(($diff_timestamp / 60) / 60), 2, '0', STR_PAD_LEFT);
+	$diff_minutes = str_pad(abs(round($diff_timestamp / 60) - ($diff_hours * 60)), 2, '0', STR_PAD_LEFT);
+
+	$duration = $diff_hours . $diff_minutes;
+
+	return array(
+			'start' => $start_date,
+			'end' => $end_date,
+			'both' => $start_date . '/' . $end_date,
+			'local_start' => $local_start_date,
+			'local_end' => $local_end_date,
+			'duration' => $duration,
+	);
+}
