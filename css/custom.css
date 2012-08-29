@@ -22,10 +22,15 @@ div#quicktabs-container-node_65 .view-content {
 	float:left;
 }
 /*65 tab0*/
-ul.quicktabs-tabs li a#quicktabs-tab-node_65-0,
-ul.quicktabs-tabs li a#quicktabs-tab-node_68-0{
+ul.quicktabs-tabs li a#quicktabs-tab-node_65-0{
 	background: url("../images/tab1.png") no-repeat top left;
 	padding:7px 41px 5px 15px;
+	/* border-top-left-radius: 15px;
+	border-top-right-radius: 15px; */
+}
+ul.quicktabs-tabs li a#quicktabs-tab-node_68-0{
+	background: url("../images/tab1.png") no-repeat top left;
+	padding:7px 27px 5px 15px;
 	/* border-top-left-radius: 15px;
 	border-top-right-radius: 15px; */
 }
@@ -41,13 +46,19 @@ div#quicktabs-container-node_68 div#quicktabs-tabpage-node_68-0{
 
 
 /*65 tab1*/
-ul.quicktabs-tabs li a#quicktabs-tab-node_65-1,
-ul.quicktabs-tabs li a#quicktabs-tab-node_68-1{
+ul.quicktabs-tabs li a#quicktabs-tab-node_65-1{
+
 	background: url("../images/tab2.png") no-repeat top left;
 	padding:7px 26px 5px 15px;
+	
 	/* border-top-left-radius: 15px;
+	
 	border-top-right-radius: 15px; */
 	
+}
+ul.quicktabs-tabs li a#quicktabs-tab-node_68-1{
+	background: url("../images/tab2.png") no-repeat top left;
+	padding:7px 53px 5px 15px;
 }
 
 
@@ -59,10 +70,17 @@ div#quicktabs-container-node_68 div#quicktabs-tabpage-node_68-1{
 }
 
 /*65 tab2*/
-ul.quicktabs-tabs li a#quicktabs-tab-node_65-2,
-ul.quicktabs-tabs li a#quicktabs-tab-node_68-2{
+ul.quicktabs-tabs li a#quicktabs-tab-node_65-2{
 	background: url("../images/tab3.png") no-repeat top left;
 	padding:7px 39px 5px 15px;
+	/*border-top-left-radius: 15px;
+	border-top-right-radius: 15px;*/
+	text-align:center;
+}
+
+ul.quicktabs-tabs li a#quicktabs-tab-node_68-2{
+	background: url("../images/tab3.png") no-repeat top left;
+	padding:7px 25px 5px 15px;
 	/*border-top-left-radius: 15px;
 	border-top-right-radius: 15px;*/
 	text-align:center;
@@ -79,10 +97,16 @@ div#quicktabs-container-node_68 div#quicktabs-tabpage-node_68-2{
 
 
 /*65 tab3*/
-ul.quicktabs-tabs li a#quicktabs-tab-node_65-3,
-ul.quicktabs-tabs li a#quicktabs-tab-node_68-3{
+ul.quicktabs-tabs li a#quicktabs-tab-node_65-3{
 	background: url("../images/tab4.png") no-repeat top left;
 	padding:7px 45px 5px 15px;
+	/* border-top-left-radius: 15px;
+	border-top-right-radius: 15px; */
+	
+}
+ul.quicktabs-tabs li a#quicktabs-tab-node_68-3{
+	background: url("../images/tab4.png") no-repeat top left;
+	padding:7px 50px 5px 15px;
 	/* border-top-left-radius: 15px;
 	border-top-right-radius: 15px; */
 	
